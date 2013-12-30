@@ -60,10 +60,11 @@
 
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.responseSerializer = defaultSerializer;
-        BDBOAuthToken *requestToken = [BDBOAuthToken tokenWithQueryString:operation.responseString];
-        self.requestSerializer.requestToken = requestToken;
-        if (success)
+        if (success){
+	        BDBOAuthToken *requestToken = [BDBOAuthToken tokenWithQueryString:operation.responseString];
+	        self.requestSerializer.requestToken = requestToken;
             success(requestToken);
+		}
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.responseSerializer = defaultSerializer;
         if (failure)
