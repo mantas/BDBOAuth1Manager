@@ -47,6 +47,10 @@
                           success:(void (^)(BDBOAuthToken *requestToken))success
                           failure:(void (^)(NSError *error))failure
 {
+    if(self.isAuthorized){
+        @throw([NSException exceptionWithName:@"Duplicate token request" reason:@"Can't fetch request token twice. Please deauthorize before fetching a new token" userInfo:nil]);
+    }
+	
     AFHTTPResponseSerializer *defaultSerializer = self.responseSerializer;
     self.responseSerializer = [AFHTTPResponseSerializer serializer];
 
